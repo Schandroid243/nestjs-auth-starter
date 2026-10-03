@@ -9,7 +9,7 @@ A reusable authentication starter for NestJS APIs, written in strict TypeScript.
 - [x] Project bootstrap (NestJS, strict TypeScript)
 - [x] Environment validation at startup with Joi (the app refuses to start if a required variable is missing)
 - [x] PostgreSQL 16 via Docker Compose
-- [ ] User entity and migrations (TypeORM)
+- [x] User entity and migrations (TypeORM)
 - [ ] Register / login with bcrypt
 - [ ] JWT access tokens + refresh token rotation with reuse detection
 - [ ] Role-based access control (RBAC)
