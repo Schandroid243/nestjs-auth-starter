@@ -9,6 +9,6 @@ export const AppDataSource = new DataSource({
   type: 'postgres',
   url: process.env.DATABASE_URL,
   entities: [User],
-  migrations: [__dirname + 'migrations/*{.ts,.js'],
+  migrations: [__dirname + '/migrations/*{.ts,.js}'],
   synchronize: false, //To force the usage of migrations instead of auto-syncing
 });
