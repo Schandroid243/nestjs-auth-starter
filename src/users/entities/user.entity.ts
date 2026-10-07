@@ -6,6 +6,8 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
+import { Exclude } from 'class-transformer';
+
 export enum UserRole {
   USER = 'USER',
   ADMIN = 'ADMIN',
@@ -20,6 +22,7 @@ export class User {
   email: string;
 
   @Column()
+  @Exclude()
   passwordHash: string;
 
   @Column({
