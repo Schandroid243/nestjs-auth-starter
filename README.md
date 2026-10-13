@@ -11,7 +11,7 @@ A reusable authentication starter for NestJS APIs, written in strict TypeScript.
 - [x] PostgreSQL 16 via Docker Compose
 - [x] User entity and migrations (TypeORM)
 - [x] Register / login with bcrypt
-- [ ] JWT access tokens + refresh token rotation with reuse detection
+- [x] JWT access tokens + refresh token rotation with reuse detection
 - [ ] Role-based access control (RBAC)
 - [ ] Security hardening: Helmet, CORS allowlist, rate limiting
 - [ ] Unit and e2e tests, CI, Docker image
