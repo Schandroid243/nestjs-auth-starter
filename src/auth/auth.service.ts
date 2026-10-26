@@ -1,8 +1,12 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 import { UsersService } from '../users/users.service';
+import { RefreshToken } from '../auth/entities/refresh-token.entity';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import { User, UserRole } from '../users/entities/user.entity';
@@ -14,6 +18,8 @@ export class AuthService {
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
     private readonly configService: ConfigService,
+    @InjectRepository(RefreshToken)
+    private readonly refreshTokenRepository: Repository<RefreshToken>,
   ) {}
 
   async register(registerDto: RegisterDto): Promise<User> {
@@ -28,7 +34,9 @@ export class AuthService {
     });
   }
 
-  async login(loginDto: LoginDto): Promise<{ accessToken: string }> {
+  async login(
+    loginDto: LoginDto,
+  ): Promise<{ accessToken: string; refreshToken: string; expiresAt: Date }> {
     const { email, password } = loginDto;
     const user = await this.usersService.findByEmail(email);
     const invalidCredentialsError = new UnauthorizedException(
@@ -53,6 +61,28 @@ export class AuthService {
       expiresIn:
         this.configService.get<string>('JWT_ACCESS_EXPIRES_IN') || '15m',
     } as JwtSignOptions);
-    return { accessToken };
+
+    const refreshTokenPlain = crypto.randomBytes(64).toString('base64url');
+    const tokenHash = crypto
+      .createHash('sha256')
+      .update(refreshTokenPlain)
+      .digest('hex');
+
+    const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    const familiyId = crypto.randomUUID();
+
+    const refreshTokenEntity = this.refreshTokenRepository.create({
+      userId: user.id,
+      tokenHash,
+      familiyId,
+      expiresAt,
+    });
+    await this.refreshTokenRepository.save(refreshTokenEntity);
+
+    return {
+      accessToken,
+      refreshToken: refreshTokenPlain,
+      expiresAt,
+    };
   }
 }

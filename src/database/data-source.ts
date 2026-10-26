@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 import { config } from 'dotenv';
 import { User } from '../users/entities/user.entity';
+import { RefreshToken } from '../auth/entities/refresh-token.entity';
 
 // Load environment variables from .env file
 config();
@@ -8,7 +9,7 @@ config();
 export const AppDataSource = new DataSource({
   type: 'postgres',
   url: process.env.DATABASE_URL,
-  entities: [User],
+  entities: [User, RefreshToken],
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
   synchronize: false, //To force the usage of migrations instead of auto-syncing
 });
