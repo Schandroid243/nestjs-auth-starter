@@ -12,7 +12,7 @@ A reusable authentication starter for NestJS APIs, written in strict TypeScript.
 - [x] User entity and migrations (TypeORM)
 - [x] Register / login with bcrypt
 - [x] JWT access tokens + refresh token rotation with reuse detection
-- [ ] Role-based access control (RBAC)
+- [x] Role-based access control (RBAC)
 - [ ] Security hardening: Helmet, CORS allowlist, rate limiting
 - [ ] Unit and e2e tests, CI, Docker image
 
@@ -29,10 +29,10 @@ npm run start:dev
 
 ## Environment variables
 
-| Variable | Description |
-|---|---|
-| `DATABASE_URL` | PostgreSQL connection string |
-| `JWT_ACCESS_SECRET` | Secret used to sign access tokens |
-| `JWT_REFRESH_SECRET` | Secret used for refresh tokens |
-| `CORS_ORIGINS` | Comma-separated list of allowed origins |
-| `PORT` | HTTP port (default: 3000) |
+| Variable             | Description                             |
+| -------------------- | --------------------------------------- |
+| `DATABASE_URL`       | PostgreSQL connection string            |
+| `JWT_ACCESS_SECRET`  | Secret used to sign access tokens       |
+| `JWT_REFRESH_SECRET` | Secret used for refresh tokens          |
+| `CORS_ORIGINS`       | Comma-separated list of allowed origins |
+| `PORT`               | HTTP port (default: 3000)               |
