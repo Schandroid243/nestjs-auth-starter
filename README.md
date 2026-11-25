@@ -13,7 +13,7 @@ A reusable authentication starter for NestJS APIs, written in strict TypeScript.
 - [x] Register / login with bcrypt
 - [x] JWT access tokens + refresh token rotation with reuse detection
 - [x] Role-based access control (RBAC)
-- [ ] Security hardening: Helmet, CORS allowlist, rate limiting
+- [x] Security hardening: Helmet, CORS allowlist, rate limiting
 - [ ] Unit and e2e tests, CI, Docker image
 
 ## Getting started
