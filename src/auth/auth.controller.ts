@@ -1,4 +1,5 @@
 import { Controller, Post, Body, UseGuards, Get, Res } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import type { Response } from 'express';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
@@ -25,6 +26,7 @@ export class AuthController {
   }
 
   @Post('login')
+  @Throttle({ default: { limit: 5, ttl: 60_000 } })
   async login(
     @Body() loginDto: LoginDto,
     @Res({ passthrough: true }) response: Response,
